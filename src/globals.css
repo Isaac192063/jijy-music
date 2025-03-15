@@ -1,0 +1,26 @@
+/* app/globals.css */
+@layer base {
+    :root {
+      --background: 0 0% 100%; /* Blanco */
+      --foreground: 0 0% 3.9%; /* Casi negro */
+      --primary: 0 0% 9%; /* Gris oscuro */
+      --primary-foreground: 0 0% 98%; /* Blanco */
+      /* Otras variables... */
+    }
+  
+    .dark {
+      --background: 0 0% 3.9%; /* Casi negro */
+      --foreground: 0 0% 98%; /* Blanco */
+      --primary: 0 0% 98%; /* Blanco */
+      --primary-foreground: 0 0% 9%; /* Gris oscuro */
+      /* Otras variables... */
+    }
+  }
+
+.s-5{
+    width: 25px !important;
+    height: 25px !important;
+}
+.h-complete{
+  height: calc(100vh - 64px) !important;
+}
