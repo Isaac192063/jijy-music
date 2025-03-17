@@ -9,52 +9,25 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/components/ui/avatar';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+
 import {
   User,
   CreditCard,
-  Bell,
   Shield,
-  LogOut,
   Edit,
   Save,
 } from 'lucide-react';
+import { IUserProfile, useUserStorage } from '@/store/perfilStore';
+import { AvatarPerfilAccount } from '../../components/avatarPerfilAcount';
 
 // Definición de interfaces
-interface UserProfile {
-  id: string;
-  name: string;
-  email: string;
-  username: string;
-  avatar: string;
-  bio: string;
-  location: string;
-  phone: string;
-  website: string;
-  createdAt: string;
-}
 
 interface BillingInfo {
   plan: string;
@@ -78,18 +51,7 @@ interface SecuritySettings {
 
 export const Account: React.FC = () => {
   // Estado del perfil
-  const [profile, setProfile] = useState<UserProfile>({
-    id: 'user-123',
-    name: 'Carlos Martínez',
-    email: 'carlos.martinez@ejemplo.com',
-    username: 'carlosm',
-    avatar: '',
-    bio: 'Desarrollador web y entusiasta de la música',
-    location: 'Madrid, España',
-    phone: '+34 612 345 678',
-    website: 'carlosmartinez.dev',
-    createdAt: '12 de Marzo, 2023',
-  });
+  const {user, setUser} = useUserStorage();
 
   const [billing] = useState<BillingInfo>({
     plan: 'Pro',
@@ -112,12 +74,12 @@ export const Account: React.FC = () => {
   });
 
   const [editMode, setEditMode] = useState(false);
-  const [editedProfile, setEditedProfile] = useState<UserProfile>({
-    ...profile,
+  const [editedProfile, setEditedProfile] = useState<IUserProfile>({
+    ...user!,
   });
 
   const handleProfileUpdate = () => {
-    setProfile(editedProfile);
+    setUser(editedProfile);
     setEditMode(false);
   };
 
@@ -135,31 +97,7 @@ export const Account: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Sidebar */}
-        <div className="md:col-span-1">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex flex-col items-center space-y-4">
-                <Avatar className="h-24 w-24">
-                  <AvatarImage src={profile.avatar} alt={profile.name} />
-                  <AvatarFallback className="text-xl">
-                    {profile.name
-                      .split(' ')
-                      .map((n) => n[0])
-                      .join('')}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="text-center">
-                  <h2 className="text-xl font-semibold">{profile.name}</h2>
-                  <p className="text-gray-500">@{profile.username}</p>
-                </div>
-                <Button variant="outline" className="w-full">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Cerrar sesión
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <AvatarPerfilAccount  user={user!}/>
 
         {/* Main Content */}
         <div className="md:col-span-3">
@@ -202,7 +140,7 @@ export const Account: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      <p className="text-lg">{profile.name}</p>
+                      <p className="text-lg">{user?.name}</p>
                       <Button onClick={() => setEditMode(true)}>
                         <Edit className="mr-2 h-4 w-4" />
                         Editar

@@ -5,9 +5,10 @@ import {
 } from "@/components/ui/avatar"
 
 export default function AvatarPerfil({url}: {url : string}) {
+    console.log(url);
     return (
         <Avatar>
-            <AvatarImage src={url} alt="@shadcn" />
+            {url && <AvatarImage src={url} alt={url} />}
             <AvatarFallback>CN</AvatarFallback>
         </Avatar>
     )

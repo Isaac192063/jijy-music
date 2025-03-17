@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Play, Clock, Heart, MoreHorizontal, Music } from "lucide-react";
-import CategoryExplorer from "@/music/components/categoryExplorer";
+import { Card } from "@/components/ui/card";
+import { Clock, Heart, MoreHorizontal, Music } from "lucide-react";
+import CategoryExplorer from "@/features/music/components/categoryExplorer";
+import { FuturePlaylist } from "../../components/futuredPlaylist";
 
 // Datos de ejemplo para los géneros musicales
 const musicGenres = [
@@ -30,7 +30,7 @@ const musicGenres = [
 ];
 
 // Datos de ejemplo para playlists destacadas
-const featuredPlaylists = [
+const featuredPlaylists : IFuturePLaylist[] = [
   { id: 1, title: "Éxitos del Momento", tracks: 50, image: "https://provider-static.plex.tv/epg/cms/production/ebed9387-534c-4093-8edf-987ac73fecc1/8530_SM_Plex_Music-Channels_2000x3000-Exitos_del_momento.jpg" },
   { id: 2, title: "Para Entrenar", tracks: 42, image: "https://i.ytimg.com/vi/TDfXFlNwUsE/maxresdefault.jpg" },
   { id: 3, title: "Relax y Chill", tracks: 35, image: "https://i.ytimg.com/vi/5qap5aO4i9A/maxresdefault.jpg" },
@@ -48,10 +48,15 @@ const recommendedSongs = [
   { id: 5, title: "Stay", artist: "The Kid LAROI, Justin Bieber", duration: "2:21", album: "F*CK LOVE 3+" },
 ];
 
-
+export interface IFuturePLaylist{
+  id: number;
+  title : string;
+  tracks: number;
+  image: string;
+}
 
 export const HomePage = () => {
-  const [hoveredPlaylist, setHoveredPlaylist] = useState<number | null>(null);
+ 
 
   return (
     <>
@@ -74,28 +79,7 @@ export const HomePage = () => {
             </div>
             <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
               {featuredPlaylists.map((playlist) => (
-                <Card key={playlist.id} className="border-0 bg-muted/30 transition-all overflow-hidden group">
-                  <div 
-                    className="relative"
-                    onMouseEnter={() => setHoveredPlaylist(playlist.id)}
-                    onMouseLeave={() => setHoveredPlaylist(null)}
-                  >
-                    <img 
-                      src={playlist.image} 
-                      alt={playlist.title} 
-                      className="w-full aspect-square object-cover rounded-t-md"
-                    />
-                    <div className={`absolute right-2 bottom-2 transform ${hoveredPlaylist === playlist.id ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} transition-all duration-200`}>
-                      <Button size="icon" className="rounded-full bg-green-500 hover:bg-green-600 shadow-lg">
-                        <Play className="h-4 w-4 fill-current" />
-                      </Button>
-                    </div>
-                  </div>
-                  <CardContent className="p-3">
-                    <h3 className="font-medium text-sm truncate">{playlist.title}</h3>
-                    <p className="text-xs text-muted-foreground">{playlist.tracks} canciones</p>
-                  </CardContent>
-                </Card>
+                <FuturePlaylist playlist={playlist} key={playlist.id} />
               ))}
             </div>
           </section>

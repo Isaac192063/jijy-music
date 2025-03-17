@@ -22,34 +22,31 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-import AvatarPerfil from '../shared/components/avatar'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AlertDialogDelete } from "@/shared/components/alertDialog"
+import { useComunityStorage } from "@/store/comunityStorage"
+import AvatarPerfil from "@/shared/components/avatar"
 
-export function NavProjects({
-  projects,
-}: {
-  projects: {
-    name: string
-    url: string
-    icon: string
-  }[]
-}) {
+export function NavComunity() {
   const { isMobile } = useSidebar()
+  const navigator = useNavigate()
+  const {comunities = []} = useComunityStorage()
 
+  console.log(comunities);
+  
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+    <SidebarGroup className="group-data-[collapsible=icon]:hidden ">
       <Link to='/home/comunity'>
         <SidebarGroupLabel className="cursor-pointer">Comunidad</SidebarGroupLabel>
       </Link>
-      <SidebarMenu>
-        {projects.map((item) => (
-          <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild className="py-5">
-              <a href={item.url}>
-                <AvatarPerfil url={item.icon} />
-                <span>{item.name}</span>
-              </a>
+      <SidebarMenu className="overflow-auto h-56">
+        {comunities.map((item) => (
+          <SidebarMenuItem key={item.id}>
+            <SidebarMenuButton asChild className="py-5" onClick={()=>{navigator(`comunity/${item.id}`)}}>
+            <div>
+              <AvatarPerfil url={item.image} />
+              <span>{item.name}</span>
+            </div>
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

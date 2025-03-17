@@ -9,7 +9,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 import { Outlet } from "react-router-dom";
 import { Asade } from "./asade";
 
-import './../../../globals.css';
+import '@/globals.css';
 
 export default function HomeStart() {
     return (
@@ -25,10 +25,6 @@ export default function HomeStart() {
                                 <BreadcrumbItem className="hidden md:block">
                                     <BreadcrumbLink href="#">Inicio</BreadcrumbLink>
                                 </BreadcrumbItem>
-                                {/* <BreadcrumbSeparator className="hidden md:block" /> */}
-                                {/* <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem> */}
                             </BreadcrumbList>
                         </Breadcrumb>
                     </div>

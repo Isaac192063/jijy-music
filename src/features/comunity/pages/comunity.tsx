@@ -8,6 +8,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { useComunityStorage } from "@/store/comunityStorage";
 
 // 🟢 Definir los tipos para las comunidades y mensajes
 interface Community {
@@ -31,13 +32,6 @@ interface Message {
   replies: number;
 }
 
-// Datos de ejemplo
-const communities: Community[] = [
-  { id: 1, name: "Amantes del Rock", members: 2453, description: "Comunidad para fans del rock clásico y moderno", category: "Rock", image: "/api/placeholder/100/100", isPopular: true, lastActive: "hace 5 minutos" },
-  { id: 2, name: "Ritmos Latinos", members: 1876, description: "Salsa, merengue, bachata y más ritmos latinos", category: "Latino", image: "/api/placeholder/100/100", isPopular: true, lastActive: "hace 1 hora" },
-  { id: 3, name: "Electrónica Underground", members: 1245, description: "El mejor techno, house y EDM alternativo", category: "Electrónica", image: "/api/placeholder/100/100", isPopular: false, lastActive: "hace 30 minutos" }
-];
-
 // Mensajes de ejemplo
 const communityMessages: Message[] = [
   { id: 1, user: "María L.", avatar: "/api/placeholder/40/40", content: "¿Alguien ha escuchado el nuevo álbum de Arctic Monkeys?", time: "14:35", likes: 8, replies: 3 },
@@ -49,10 +43,11 @@ export const CommunityPage: React.FC = () => {
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(null);
   const [messageInput, setMessageInput] = useState<string>("");
 
+  const {comunities} = useComunityStorage()
   // Filtrar comunidades según la pestaña seleccionada
   const filteredCommunities = selectedTab === "mis" 
-    ? communities.filter(c => c.isPopular) 
-    : communities;
+    ? comunities.filter(c => c.isPopular) 
+    : comunities;
     
   const handleSelectCommunity = (community: Community) => {
     setSelectedCommunity(community);

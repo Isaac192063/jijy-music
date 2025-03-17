@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-comunity";
+import { NavComunity } from "@/components/nav-comunity";
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
@@ -19,11 +19,12 @@ import {
     SidebarHeader,
     SidebarRail,
 } from "@/components/ui/sidebar";
-import { useTheme } from "@/context/ThemeContext";
+import { useTheme } from "@/store/ThemeContext";
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const { theme, toggleTheme } = useTheme();
+
 
     const data = {
         user: {
@@ -142,12 +143,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarHeader>
             <SidebarContent>
                 <NavMain items={data.navMain} />
-                <div className="overflow-auto h-64">
-                    <NavProjects projects={data.comunity} />
+                <div className="">
+                    <NavComunity  />
                 </div>
             </SidebarContent>
             <SidebarFooter>
-                <NavUser user={data.user} />
+                <NavUser />
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>

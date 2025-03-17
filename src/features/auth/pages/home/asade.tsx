@@ -6,6 +6,7 @@ import { Languages } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Footer } from "@/shared/components/footer";
+import { CarDetail } from "@/features/auth/components/carDetail";
 
 export function ButtonWithIcon() {
     return (
@@ -14,6 +15,7 @@ export function ButtonWithIcon() {
         </Button>
     );
 }
+
 
 const footerOption = [
     "legal",
@@ -40,37 +42,19 @@ export function Asade({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </div>
                 </SidebarHeader>
                 <SidebarContent>
-                    <article className="p-5 bg-amber-200 rounded-3xl m-2 flex flex-col shadow-sm">
-                        <div>
-                            <h4 className="text-lg font-bold mb-1 text-amber-900">
-                                Interactúa con comunidades
-                            </h4>
-                            <p className="text-xs text-amber-800 mb-3">
-                                Conecta con personas que comparten tus gustos musicales.
-                            </p>
-                        </div>
-                        <Button className="rounded-3xl bg-amber-500 hover:bg-amber-600 text-white text-sm self-start mt-auto">
-                            Ver comunidades
-                        </Button>
-                    </article>
-
-                    <article className="p-5 bg-amber-300 rounded-3xl m-2 flex flex-col shadow-sm">
-                        <div>
-                            <h4 className="text-lg font-bold mb-1 text-amber-900">
-                                Explora temas musicales
-                            </h4>
-                            <p className="text-xs text-amber-800 mb-3">
-                                Descubre música según tu estado de ánimo.
-                            </p>
-                        </div>
-                        <Button className="rounded-3xl bg-amber-600 hover:bg-amber-700 text-white text-sm self-start mt-auto">
-                            Explorar
-                        </Button>
-                    </article>
-
+                    <CarDetail
+                        description=" Descubre música según tu estado de ánimo."
+                        nameBoton="Explorar"
+                        title="Explora temas musicales"
+                    />
+                    <CarDetail
+                        description="Conecta con personas que comparten tus gustos musicales."
+                        nameBoton="Ver comunidades"
+                        title="Interactúa con comunidades"
+                    />
                     <section className="flex flex-wrap">
-                        {footerOption.map((option,index) => (
-                            <Footer value={option}  key={index}/>
+                        {footerOption.map((option, index) => (
+                            <Footer value={option} key={index} />
                         ))}
                     </section>
                 </SidebarContent>

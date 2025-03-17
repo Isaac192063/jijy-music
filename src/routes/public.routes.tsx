@@ -1,14 +1,14 @@
-import { RegisterPage } from "../auth/pages/register/register";
-import { LoginPage } from "../auth/pages/login/login";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
-import StartLayout from "@/layout/start";
-import { HomePage } from "@/music/pages/home/home";
-import { CommunityPage } from "@/comunity/pages/comunity/comunity";
+import StartLayout from "@/features/auth/layout/start";
+import { HomePage } from "@/features/music/pages/home/home";
+import { CommunityPage } from "@/features/comunity/pages/comunity";
 import Page from "@/App";
-import HomeStart from "@/auth/pages/home/HomeStart";
-import { CreateListReproductionPage } from "@/music/pages/list_reproduction/createListReproduction";
+import HomeStart from "@/features/auth/pages/home/HomeStart";
+import { CreateListReproductionPage } from "@/features/music/pages/list_reproduction/createListReproduction";
 import MainLayout from "@/layout/main";
-import { Account } from "@/admin/pages/user/account";
+import { Account } from "@/features/admin/pages/user/account";
+import { authRoutes } from "@/features/auth/routes";
+import { ComunityDetail } from "@/features/comunity/pages/comunityDetail";
 
 export const publicRoutes: RouteObject[] = [
     {
@@ -20,19 +20,13 @@ export const publicRoutes: RouteObject[] = [
                 element: <HomeStart />,
                 children: [
                     {
+                        index: true,
                         path: "",
                         element: <HomePage />,
                     },
                 ],
             },
-            {
-                path: "auth/login",
-                element: <LoginPage />,
-            },
-            {
-                path: "auth/register",
-                element: <RegisterPage />,
-            },
+            ...authRoutes
         ],
     },
     {
@@ -50,12 +44,14 @@ export const publicRoutes: RouteObject[] = [
                     {
                         path: "comunity",
                         element: <CommunityPage />,
-                        
+                    },
+                    {
+                        path: 'comunity/:id',
+                        element: <ComunityDetail/>
                     },
                     {
                         path: "account",
                         element: <Account />,
-                        
                     },
                     {
                         path: "create-list-reproduction",
