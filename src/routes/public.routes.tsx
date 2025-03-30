@@ -1,14 +1,18 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 import StartLayout from "@/features/auth/layout/start";
-import { HomePage } from "@/features/music/pages/home/home";
+import { HomeMusic } from "@/features/music/pages/home/home";
 import { CommunityPage } from "@/features/comunity/pages/comunity";
 import Page from "@/App";
 import HomeStart from "@/features/auth/pages/home/HomeStart";
 import { CreateListReproductionPage } from "@/features/music/pages/list_reproduction/createListReproduction";
 import MainLayout from "@/layout/main";
-import { Account } from "@/features/admin/pages/user/account";
 import { authRoutes } from "@/features/auth/routes";
 import { ComunityDetail } from "@/features/comunity/pages/comunityDetail";
+import Account from "@/features/admin/pages/account";
+import AdminLayout from "@/layout/adminLayout";
+import SongList from "@/features/admin/pages/songList";
+import AddMusicPage from "@/features/admin/pages/addMusic";
+import DashboardPage from "@/features/admin/pages/dashboard";
 
 export const publicRoutes: RouteObject[] = [
     {
@@ -22,7 +26,7 @@ export const publicRoutes: RouteObject[] = [
                     {
                         index: true,
                         path: "",
-                        element: <HomePage />,
+                        element: <HomeMusic />,
                     },
                 ],
             },
@@ -39,7 +43,7 @@ export const publicRoutes: RouteObject[] = [
                 children: [
                     {
                         path: "",
-                        element: <HomePage />,
+                        element: <HomeMusic />,
                     },
                     {
                         path: "comunity",
@@ -61,6 +65,34 @@ export const publicRoutes: RouteObject[] = [
             },
         ],
     },
+    {
+        path: 'admin',
+        element: <AdminLayout/>,
+        children:[
+            {
+                path: '',
+                element: <Page role="admin"/>,
+                children: [
+                    {
+                        path: '',
+                        element: <DashboardPage/>
+                    },
+                    {
+                        path: 'add-songs',
+                        element: <AddMusicPage/>
+                    },
+                    {
+                        path: "account",
+                        element: <Account />,
+                    },
+                    {
+                        path: 'songs',
+                        element: <SongList/>
+                    }
+                ]
+            }
+        ]
+    }
 ];
 
 export const router = createBrowserRouter(publicRoutes);

@@ -1,44 +1,67 @@
+import { UserService } from "@/shared/services/UserService";
+import { User } from "@/shared/types/User";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-
-export interface IUserProfile {
-    id: string;
-    name: string;
-    email: string;
-    username: string;
-    avatar: string;
-    bio: string;
-    location: string;
-    phone: string;
-    createdAt: string;
-}
 
 type UserStorage = {
-    user: IUserProfile | null;
-    setUser: (user: IUserProfile) => void;
+    user: User | null;
+    users: User[];
+    fetchUser: (id: string) => Promise<void>;
+    fetchAllUsers: () => Promise<void>;
+    updateUser: (id: string, userData: User) => Promise<void>;
+    deleteUser: (id: string) => Promise<void>;
     logout: () => void;
 };
 
-export const useUserStorage = create<UserStorage>()(
-    persist(
-        (set) => ({
-            user: {
-                id: "user-123",
-                name: "Carlos londoño",
-                email: "carlos.londoño@ejemplo.com",
-                username: "carlosm",
-                avatar: "",
-                bio: "Desarrollador web y entusiasta de la música",
-                location: "Madrid, España",
-                phone: "+34 612 345 678",
-                createdAt: "12 de Marzo, 2023",
-            },
-            logout: () => set({ user: null }),
-            setUser: (userData) => set({ user: userData }),
-        }),
+export const useUserStorage = create<UserStorage>()((set) => ({
+    user: null,
+    users: [],
 
-        {
-            name: "user_storage",
+    // Obtener usuario por ID
+    fetchUser: async (id: string) => {
+        try {
+            const userData = await UserService.getById(id);
+            set({ user: userData });
+        } catch (error) {
+            console.error("Error fetching user:", error);
         }
-    )
-);
+    },
+
+    // Obtener todos los usuarios
+    fetchAllUsers: async () => {
+        try {
+            const usersData = await UserService.getAll();
+            set({ users: usersData });
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    },
+
+    // Actualizar usuario
+    updateUser: async (id: string, userData: User) => {
+        try {
+            const updatedUser = await UserService.update(id, userData);
+            set((state) => ({
+                user: state.user?.id === id ? updatedUser : state.user,
+                users: state.users.map((user) => (user.id === id ? updatedUser : user)),
+            }));
+        } catch (error) {
+            console.error("Error updating user:", error);
+        }
+    },
+
+    // Eliminar usuario
+    deleteUser: async (id: string) => {
+        try {
+            await UserService.delete(id);
+            set((state) => ({
+                users: state.users.filter((user) => user.id !== id),
+                user: state.user?.id === id ? null : state.user,
+            }));
+        } catch (error) {
+            console.error("Error deleting user:", error);
+        }
+    },
+
+    // Cerrar sesión
+    logout: () => set({ user: null }),
+}));

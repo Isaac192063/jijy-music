@@ -1,13 +1,11 @@
 import * as React from "react";
 import {
-    Bot,
     GalleryVerticalEnd,
     Settings2,
     SquareTerminal,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
-import { NavComunity } from "@/components/nav-comunity";
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
@@ -20,7 +18,8 @@ import {
 import { useTheme } from "@/store/ThemeContext";
 
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+export function AppSidebarAdmin({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const { theme, toggleTheme } = useTheme();
 
 
@@ -44,29 +43,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         url: "#",
                     },
                     {
-                        title: "Historial",
-                        url: "#",
-                    },
-                ],
-            },
-            {
-                title: "Listas de reproducción",
-                url: "#",
-                icon: Bot,
-                isActive: true,
-                items: [
-                    {
-                        title: "Explorar",
-                        url: "#",
+                        title: "Agregar",
+                        url: "add-songs",
                     },
                     {
-                        title: "Crear",
-                        url: "/home/create-list-reproduction",
-                    },
-                    {
-                        title: "Buscar",
-                        url: "#",
-                    },
+                        title: "listar",
+                        url: "songs"
+                    }
                 ],
             },
             {
@@ -100,9 +83,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarHeader>
             <SidebarContent>
                 <NavMain items={data.navMain} />
-                <div className="">
-                    <NavComunity  />
-                </div>
             </SidebarContent>
             <SidebarFooter>
                 <NavUser />

@@ -55,7 +55,7 @@ export interface IFuturePLaylist{
   image: string;
 }
 
-export const HomePage = () => {
+export const HomeMusic = () => {
  
 
   return (

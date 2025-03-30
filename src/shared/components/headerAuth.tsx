@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
 
-const HeaderAuth = () => {
+const HeaderAuth = ({role = 'user'}: {role?: string}) => {
   return (
     <header className="w-full h-16 sticky top-0 bg-gradient-to-r from-orange-500 to-amber-500 z-10 shadow-md">
       <div className="container mx-auto h-full flex items-center justify-between px-4">
@@ -21,7 +21,7 @@ const HeaderAuth = () => {
         <Link to=''>
             <div className="flex items-center space-x-2 cursor-pointer">
             <Music className="h-8 w-8 text-white" />
-            <span className="text-white font-bold text-xl hidden sm:inline">Jijy</span>
+            <span className="text-white font-bold text-xl hidden sm:inline">{role === 'user'? 'Jijy': 'Jijy Admin'}</span>
             </div>
         </Link>
 
